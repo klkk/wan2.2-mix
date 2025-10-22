@@ -1,0 +1,29 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "framework": "nextjs",
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "/api/:path*"
+    }
+  ],
+  "functions": {
+    "app/api/create-task/route.ts": {
+      "maxDuration": 60
+    },
+    "app/api/query-task/route.ts": {
+      "maxDuration": 30
+    },
+    "app/api/upload/route.ts": {
+      "maxDuration": 60
+    },
+    "app/api/upload/merge/route.ts": {
+      "maxDuration": 60
+    }
+  },
+  "installCommand": "npm install",
+  "env": {
+    "NEXT_PUBLIC_API_BASE_URL": "https://dashscope.aliyuncs.com"
+  }
+}
