@@ -32,9 +32,10 @@ export async function POST(request: NextRequest) {
       if (existsSync(chunkPath)) {
         const readStream = createReadStream(chunkPath);
         
-        await new Promise((resolve, reject) => {
+        // 修复 Promise 类型问题
+        await new Promise<void>((resolve, reject) => {
           readStream.pipe(writeStream, { end: false });
-          readStream.on('end', resolve);
+          readStream.on('end', () => resolve());
           readStream.on('error', reject);
         });
         
@@ -43,7 +44,12 @@ export async function POST(request: NextRequest) {
       }
     }
     
-    writeStream.end();
+    // 结束写入流
+    await new Promise<void>((resolve, reject) => {
+      writeStream.on('finish', () => resolve());
+      writeStream.on('error', reject);
+      writeStream.end();
+    });
     
     return NextResponse.json({
       success: true,
