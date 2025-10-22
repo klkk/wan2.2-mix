@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { queryTask } from '@/lib/api-client';
-import { ApiResponse } from '@/types';
+import { createErrorResponse } from '@/lib/error-handler';
 
 export async function GET(request: NextRequest) {
   try {
@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
 
     if (!taskId) {
       return NextResponse.json(
-        { success: false, error: { code: 'InvalidParameter', message: '缺少taskId参数' } },
+        createErrorResponse('InvalidParameter', '缺少taskId参数'),
         { status: 400 }
       );
     }
@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('Query task error:', error);
     return NextResponse.json(
-      { success: false, error: { code: 'InternalError', message: '服务器内部错误' } },
+      createErrorResponse('InternalError', '服务器内部错误'),
       { status: 500 }
     );
   }
