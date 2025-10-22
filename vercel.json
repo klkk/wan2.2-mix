@@ -15,11 +15,11 @@
     "app/api/query-task/route.ts": {
       "maxDuration": 30
     },
-    "app/api/upload/route.ts": {
+    "app/api/upload/simple/route.ts": {
       "maxDuration": 60
     },
-    "app/api/upload/merge/route.ts": {
-      "maxDuration": 60
+    "app/api/file/[fileId]/route.ts": {
+      "maxDuration": 30
     }
   },
   "installCommand": "npm install",
