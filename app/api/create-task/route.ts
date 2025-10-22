@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createTask } from '@/lib/api-client';
-import { ApiResponse } from '@/types';
+import { createErrorResponse } from '@/lib/error-handler';
 
 export async function POST(request: NextRequest) {
   try {
@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
 
     if (!imageUrl || !videoUrl || !model) {
       return NextResponse.json(
-        { success: false, error: { code: 'InvalidParameter', message: '缺少必要参数' } },
+        createErrorResponse('InvalidParameter', '缺少必要参数'),
         { status: 400 }
       );
     }
@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Create task error:', error);
     return NextResponse.json(
-      { success: false, error: { code: 'InternalError', message: '服务器内部错误' } },
+      createErrorResponse('InternalError', '服务器内部错误'),
       { status: 500 }
     );
   }
