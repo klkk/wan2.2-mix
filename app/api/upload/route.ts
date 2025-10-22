@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // 普通上传 - 使用临时文件
+    // 普通上传
     if (!file) {
       return NextResponse.json(
         { success: false, error: { code: 'InvalidParameter', message: '没有上传文件' } },
