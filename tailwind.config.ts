@@ -13,8 +13,13 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      animation: {
+        'fade-in': 'fadeIn 0.5s ease-out',
+        'spin-slow': 'spin 2s linear infinite',
+      },
     },
   },
   plugins: [],
 };
+
 export default config;
