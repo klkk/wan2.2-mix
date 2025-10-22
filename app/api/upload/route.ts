@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFile, mkdir, stat } from 'fs/promises';
+import { writeFile, mkdir } from 'fs/promises';
 import { join } from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { existsSync } from 'fs';
@@ -22,6 +22,7 @@ export async function POST(request: NextRequest) {
     const fileId = data.get('fileId') as string;
     const fileName = data.get('fileName') as string;
 
+    // 分片上传
     if (chunkIndex && totalChunks && fileId) {
       await ensureDir(CHUNKS_DIR);
       
@@ -40,6 +41,7 @@ export async function POST(request: NextRequest) {
       });
     }
 
+    // 普通上传 - 使用临时文件
     if (!file) {
       return NextResponse.json(
         { success: false, error: { code: 'InvalidParameter', message: '没有上传文件' } },
@@ -52,12 +54,12 @@ export async function POST(request: NextRequest) {
 
     await ensureDir(UPLOADS_DIR);
 
-    const fileName = `${uuidv4()}-${file.name}`;
-    const filePath = join(UPLOADS_DIR, fileName);
+    const uniqueFileName = `${uuidv4()}-${file.name}`;
+    const filePath = join(UPLOADS_DIR, uniqueFileName);
     
     await writeFile(filePath, buffer);
 
-    const fileUrl = `/uploads/${fileName}`;
+    const fileUrl = `/uploads/${uniqueFileName}`;
 
     return NextResponse.json({
       success: true,
