@@ -28,10 +28,6 @@ yarn-error.log*
 # Vercel
 .vercel
 
-# Uploads
-/public/uploads/*
-!/public/uploads/.gitkeep
-
-# Temp files
+# 不要上传临时文件
 /temp/*
-!/temp/.gitkeep
+/public/uploads/*
