@@ -25,6 +25,7 @@ export async function POST(request: NextRequest) {
     
     const writeStream = createWriteStream(finalPath);
     
+    // 合并所有分片
     for (let i = 0; i < totalChunks; i++) {
       const chunkPath = join(CHUNKS_DIR, `${fileId}-${i}`);
       
@@ -37,6 +38,7 @@ export async function POST(request: NextRequest) {
           readStream.on('error', reject);
         });
         
+        // 删除分片文件
         await unlink(chunkPath);
       }
     }
