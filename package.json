@@ -15,7 +15,8 @@
     "axios": "^1.6.0",
     "lucide-react": "^0.263.1",
     "sonner": "^1.4.0",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "buffer": "^6.0.3"
   },
   "devDependencies": {
     "@types/node": "^20",
