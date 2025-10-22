@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { ApiResponse, ModelType } from '@/types';
+import { createErrorResponse } from './error-handler';
 
 const localApi = axios.create({
   baseURL: '/api',
@@ -26,14 +27,7 @@ export const createTaskLocal = async (imageUrl: string, videoUrl: string, model:
     
     return response.data;
   } catch (error: any) {
-    return error.response?.data || {
-      success: false,
-      error: { 
-        code: 'NetworkError', 
-        message: '网络请求失败',
-        requestId: undefined
-      },
-    };
+    return error.response?.data || createErrorResponse('NetworkError', '网络请求失败');
   }
 };
 
@@ -42,14 +36,7 @@ export const queryTaskLocal = async (taskId: string): Promise<ApiResponse> => {
     const response = await localApi.get(`/query-task?taskId=${taskId}`);
     return response.data;
   } catch (error: any) {
-    return error.response?.data || {
-      success: false,
-      error: { 
-        code: 'NetworkError', 
-        message: '网络请求失败',
-        requestId: undefined
-      },
-    };
+    return error.response?.data || createErrorResponse('NetworkError', '网络请求失败');
   }
 };
 
@@ -65,14 +52,7 @@ export const uploadFile = async (file: File): Promise<ApiResponse> => {
     
     return await response.json();
   } catch (error) {
-    return {
-      success: false,
-      error: { 
-        code: 'UploadError', 
-        message: '文件上传失败',
-        requestId: undefined
-      },
-    };
+    return createErrorResponse('UploadError', '文件上传失败');
   }
 };
 
