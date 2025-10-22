@@ -20,7 +20,7 @@ export interface Task {
 export interface ApiError {
   code: string;
   message: string;
-  requestId: string;
+  requestId?: string; // 改为可选
 }
 
 export interface ApiResponse<T = any> {
