@@ -28,7 +28,11 @@ export const createTaskLocal = async (imageUrl: string, videoUrl: string, model:
   } catch (error: any) {
     return error.response?.data || {
       success: false,
-      error: { code: 'NetworkError', message: '网络请求失败' },
+      error: { 
+        code: 'NetworkError', 
+        message: '网络请求失败',
+        requestId: undefined
+      },
     };
   }
 };
@@ -40,7 +44,11 @@ export const queryTaskLocal = async (taskId: string): Promise<ApiResponse> => {
   } catch (error: any) {
     return error.response?.data || {
       success: false,
-      error: { code: 'NetworkError', message: '网络请求失败' },
+      error: { 
+        code: 'NetworkError', 
+        message: '网络请求失败',
+        requestId: undefined
+      },
     };
   }
 };
@@ -50,7 +58,7 @@ export const uploadFile = async (file: File): Promise<ApiResponse> => {
     const formData = new FormData();
     formData.append('file', file);
     
-    const response = await fetch('/api/upload/temp', {
+    const response = await fetch('/api/upload/simple', {
       method: 'POST',
       body: formData,
     });
@@ -59,7 +67,11 @@ export const uploadFile = async (file: File): Promise<ApiResponse> => {
   } catch (error) {
     return {
       success: false,
-      error: { code: 'UploadError', message: '文件上传失败' },
+      error: { 
+        code: 'UploadError', 
+        message: '文件上传失败',
+        requestId: undefined
+      },
     };
   }
 };
